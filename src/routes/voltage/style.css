@@ -1,0 +1,24 @@
+.voltage-title {
+  font-weight: lighter;
+}
+.voltage-chart {
+  display: grid;
+  margin-bottom: 15px;
+  grid-template-columns: calc(100vw - 590px) auto;
+  column-gap: 10px;
+}
+.voltage-unbalanced-chart {
+  display: grid;
+  grid-template-columns: calc(100vw - 660px) auto;
+  column-gap: 10px;
+}
+.voltage-options {
+  display: grid;
+  align-items: center;
+}
+.voltage-options-item {
+  display: grid;
+  row-gap: 10px;
+  align-items: center;
+  grid-template-columns: 45px auto;
+}

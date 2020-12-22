@@ -1,0 +1,11 @@
+.custom-card-container {
+  padding: 10px;
+  border-radius: 5px;
+  background-image: linear-gradient(45deg, #1A234D, #1C335B);
+}
+.custom-card-body {
+  padding-top: 20px;
+}
+.custom-card-hr {
+  border-top: 1px solid white;
+}

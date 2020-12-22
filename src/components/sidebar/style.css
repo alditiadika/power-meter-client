@@ -1,0 +1,43 @@
+.sidebar-container {
+  background-color: #181845;
+  position: fixed;
+  width: 350px;
+  height: calc(100vh);
+  color: #fff;
+  padding: 10px 0px;
+}
+.colapsed {
+  width: 90px !important;
+}
+.sidebar-title {
+  text-align: center;
+  font-weight: lighter;
+}
+.sidebar-content {
+  padding-left: 70px;
+  padding-top: 40px;
+}
+.sidebar-item {
+  cursor: pointer;
+  color: #66788A;
+  display: grid;
+  grid-template-columns: 40px auto;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.sideber-icon {
+  height: 25px;
+  width: 25px;
+}
+.sidebar-item-name {
+  font-weight: lighter;
+}
+.selected {
+  color:white !important;
+  grid-template-columns: 40px auto 5px !important;
+}
+.sidebar-selected-sign {
+  background-color: #83E8A2;
+  width: 5px;
+  height: 100%;
+}

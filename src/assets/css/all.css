@@ -1,0 +1,32 @@
+
+@font-face {
+  font-family: SegoeUI;
+  src: local('Segoe UI Light'),
+    url('../font/segoeui/Segoe\ UI\ Light.woff2') format('woff2'),
+    url('../font/segoeui/Segoe\ UI\ Light.woff') format('woff'),
+    url('../font/segoeui/Segoe\ UI\ Light.ttf') format('truetype');
+  font-weight: 100;
+}
+@font-face {
+  font-family: Monserrat;
+  src: local('Monserrat Light'),
+    url('../font/monserrat/Montserrat-Medium.woff2') format('woff2'),
+    url('../font/monserrat/Montserrat-Medium.woff') format('woff'),
+    url('../font/monserrat/Montserrat-Medium.ttf') format('truetype');
+  font-weight: 100;
+}
+@font-face {
+  font-family: Nunito;
+  src: url('../font/Nunito_Sans/nunito-sans-v6-latin-200.woff2') format('woff2'),
+  url('../font/Nunito_Sans/nunito-sans-v6-latin-200.woff') format('woff'),
+  url('../font/Nunito_Sans/Nunito\ Sans.ttf') format('truetype');
+  font-weight: 100;
+}
+#root,
+body,
+html {
+  margin:0;
+  padding:0;
+  background-color: #f9fafc;
+  font-family: 'SegoeUI';
+}

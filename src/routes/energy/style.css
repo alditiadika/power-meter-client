@@ -1,0 +1,19 @@
+.energy-title {
+  font-weight: lighter;
+}
+.energy-chart {
+  display: grid;
+  margin-bottom: 15px;
+  grid-template-columns: calc(100vw - 710px) auto;
+  column-gap: 10px;
+}
+.energy-options {
+  display: grid;
+  align-items: center;
+}
+.energy-options-item {
+  display: grid;
+  row-gap: 10px;
+  align-items: center;
+  grid-template-columns: 45px auto;
+}

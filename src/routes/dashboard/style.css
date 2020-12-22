@@ -1,0 +1,15 @@
+.dashboard-title {
+  font-weight: lighter;
+}
+.dashboard-body {
+  display: grid;
+  grid-template-columns: auto auto;
+  column-gap: 10px;
+}
+.test {
+  padding-top: 20px;
+  width: 1500px;
+  height: 1000px;
+  background-color: white;
+  color: black;
+}

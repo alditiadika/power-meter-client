@@ -1,0 +1,25 @@
+.current-title {
+  font-weight: lighter;
+}
+.current-chart {
+  display: grid;
+  margin-bottom: 15px;
+  grid-template-columns: calc(100vw - 590px) auto;
+  column-gap: 10px;
+}
+.thd-current-chart {
+  display: grid;
+  grid-template-columns: calc(100vw - 590px) auto;
+  /* grid-template-columns: calc(100vw - 660px) auto; */
+  column-gap: 10px;
+}
+.current-options {
+  display: grid;
+  align-items: center;
+}
+.current-options-item {
+  display: grid;
+  row-gap: 10px;
+  align-items: center;
+  grid-template-columns: 45px auto;
+}
