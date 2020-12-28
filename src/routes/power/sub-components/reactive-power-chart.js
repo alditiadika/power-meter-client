@@ -75,7 +75,7 @@ const ReactivePowerChart = ({ reactive_power, onChangeOptions }) => {
           </CardBody>
         </Card>
         <div className='power-options'>
-          <ReactivePowerOptions onChangeOptions={onChangeOptions} />
+          <ReactivePowerOptions optionsData={reactive_power.options} onChangeOptions={onChangeOptions} />
         </div>
       </div>
     </Fragment>
@@ -106,13 +106,8 @@ Toggle.propTypes = {
   selected:propTypes.bool,
   onChange:propTypes.func
 }
-const ReactivePowerOptions = ({ onChangeOptions }) => {
-  const [options, setOptions] = useState([
-    { id:'reactive_power_a', name:'Reactive Power A', code:'Reactive_Power_A', selected:true },
-    { id:'reactive_power_b', name:'Reactive Power B', code:'Reactive_Power_B', selected:false },
-    { id:'reactive_power_c', name:'Reactive Power C', code:'Reactive_Power_C', selected:false },
-    { id:'reactive_power_total', name:'Reactive Power Total', code:'Reactive_Power_Total', selected:false }
-  ])
+const ReactivePowerOptions = ({ onChangeOptions, optionsData }) => {
+  const [options, setOptions] = useState(optionsData)
   const changeOptions = item => {
     const newItem = { ...item, selected:!item.selected }
     const newOptions = options.map(e => {
@@ -136,5 +131,6 @@ const ReactivePowerOptions = ({ onChangeOptions }) => {
   )
 }
 ReactivePowerOptions.propTypes = {
-  onChangeOptions:propTypes.func
+  onChangeOptions:propTypes.func,
+  optionsData:propTypes.array
 }

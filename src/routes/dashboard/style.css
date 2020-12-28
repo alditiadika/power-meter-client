@@ -6,10 +6,17 @@
   grid-template-columns: auto auto;
   column-gap: 10px;
 }
-.test {
-  padding-top: 20px;
-  width: 1500px;
-  height: 1000px;
-  background-color: white;
-  color: black;
+.gauge-chart {
+  display: grid;
+  grid-template-columns: 300px 300px 300px 300px 300px;
+  justify-content: center;
+  justify-items: center;
+  margin-top: 20px;
+  padding-top: 10px;
+  border-radius: 5px;
+  background-color: #333333;
+  margin-bottom: 30px;
+}
+.gauge-chart-desc {
+  margin-left: 30px;
 }

@@ -11,7 +11,7 @@ export const generalChartProperties = {
     grid: { line: { stroke: '#ddd', strokeDasharray: '1 2' } },
     textColor:'#FFFFFF',
   },
-  colors:['#DD0079', '#7CDD00', '#7900DD', 'black', '#ABABAB', '#DCE8D9', '#ECE51D', '#553353'],
+  colors:['#DD0079', '#7CDD00', '#7900DD', '#181845', '#ABABAB', '#DCE8D9', '#ECE51D', '#553353'],
   enableSlices:'x',
   enablePoints:false
 }

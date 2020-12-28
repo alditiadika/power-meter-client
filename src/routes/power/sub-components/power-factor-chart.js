@@ -75,7 +75,7 @@ const PowerFactorChart = ({ power_factor, onChangeOptions }) => {
           </CardBody>
         </Card>
         <div className='power-options'>
-          <PowerFactorOptions onChangeOptions={onChangeOptions} />
+          <PowerFactorOptions optionsData={power_factor.options} onChangeOptions={onChangeOptions} />
         </div>
       </div>
     </Fragment>
@@ -106,21 +106,8 @@ Toggle.propTypes = {
   selected:propTypes.bool,
   onChange:propTypes.func
 }
-const PowerFactorOptions = ({ onChangeOptions }) => {
-  const [options, setOptions] = useState([
-    { id:'power_factor_a', name:'Power Factor A', code:'Power_Factor_A', selected:true },
-    { id:'power_factor_b', name:'Power Factor B', code:'Power_Factor_B', selected:false },
-    { id:'power_factor_c', name:'Power Factor C', code:'Power_Factor_C', selected:false },
-    { id:'power_factor_total', name:'Power Factor Total', code:'Power_Factor_Total', selected:false },
-    { id:'displacement_power_factor_a', name:'Displacement Power Factor A', code:'Displacement_Power_Factor_A', selected:false },
-    { id:'displacement_power_factor_b', name:'Displacement Power Factor B', code:'Displacement_Power_Factor_B', selected:false },
-    { id:'displacement_power_factor_c', name:'Displacement Power Factor C', code:'Displacement_Power_Factor_C', selected:false },
-    { id:'displacement_power_factor_total', name:'Displacement Power Factor Total', code:'Displacement_Power_Factor_Total', selected:false },
-    { id:'power_factor_total_alt_1', name:'Power Factor Total Alt 1', code:'Power_Factor_Total_Alt1', selected:false },
-    { id:'power_factor_total_alt_2', name:'Power Factor Total Alt 2', code:'Power_Factor_Total_Alt2', selected:false },
-    { id:'power_factor_total_alt_3', name:'Power Factor Total Alt 3', code:'Power_Factor_Total_Alt3', selected:false },
-    { id:'power_factor_total_alt_4', name:'Power Factor Total Alt 4', code:'Power_Factor_Total_Alt4', selected:false }
-  ])
+const PowerFactorOptions = ({ onChangeOptions, optionsData }) => {
+  const [options, setOptions] = useState(optionsData)
   const changeOptions = item => {
     const newItem = { ...item, selected:!item.selected }
     const newOptions = options.map(e => {
@@ -144,5 +131,6 @@ const PowerFactorOptions = ({ onChangeOptions }) => {
   )
 }
 PowerFactorOptions.propTypes = {
-  onChangeOptions:propTypes.func
+  onChangeOptions:propTypes.func,
+  optionsData:propTypes.array
 }

@@ -75,7 +75,7 @@ const VoltageChart = ({ voltage, onChangeOptions }) => {
           </CardBody>
         </Card>
         <div className='voltage-options'>
-          <VoltageOptions onChangeOptions={onChangeOptions} />
+          <VoltageOptions optionsData={voltage.options} onChangeOptions={onChangeOptions} />
         </div>
       </div>
     </Fragment>
@@ -106,17 +106,8 @@ Toggle.propTypes = {
   selected:propTypes.bool,
   onChange:propTypes.func
 }
-const VoltageOptions = ({ onChangeOptions }) => {
-  const [options, setOptions] = useState([
-    { id:'voltage_a', name:'Voltage AB', code:'Voltage_A', selected:false },
-    { id:'voltage_b', name:'Voltage BC', code:'Voltage_B', selected:false },
-    { id:'voltage_c', name:'Voltage CA', code:'Voltage_C', selected:false },
-    { id:'voltage_ll_avg', name:'Voltage LL AVG', code:'Voltage_LL_Avg', selected:false },
-    { id:'voltage_an', name:'Voltage AN', code:'Voltage_AN', selected:true },
-    { id:'voltage_bn', name:'Voltage BN', code:'Voltage_BN', selected:false },
-    { id:'voltage_cn', name:'Voltage CN', code:'Voltage_CN', selected:false },
-    { id:'voltage_ln_avg', name:'Voltage LN AVG', code:'Voltage_LN_Avg', selected:false },
-  ])
+const VoltageOptions = ({ onChangeOptions, optionsData }) => {
+  const [options, setOptions] = useState(optionsData)
   const changeOptions = item => {
     const newItem = { ...item, selected:!item.selected }
     const newOptions = options.map(e => {
@@ -140,5 +131,6 @@ const VoltageOptions = ({ onChangeOptions }) => {
   )
 }
 VoltageOptions.propTypes = {
-  onChangeOptions:propTypes.func
+  onChangeOptions:propTypes.func,
+  optionsData:propTypes.array
 }

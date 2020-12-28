@@ -75,7 +75,7 @@ const VoltageChart = ({ voltage_unbalanced, onChangeOptions }) => {
           </CardBody>
         </Card>
         <div className='voltage-options'>
-          <VoltageOptions onChangeOptions={onChangeOptions} />
+          <VoltageOptions optionsData={voltage_unbalanced.options} onChangeOptions={onChangeOptions} />
         </div>
       </div>
     </Fragment>
@@ -106,17 +106,8 @@ Toggle.propTypes = {
   selected:propTypes.bool,
   onChange:propTypes.func
 }
-const VoltageOptions = ({ onChangeOptions }) => {
-  const [options, setOptions] = useState([
-    { id:'voltage_unbalanced_a', name:'Voltage Unbalanced AB', code:'Voltage_UnbalanceAB', selected:false },
-    { id:'voltage_unbalanced_b', name:'Voltage Unbalanced BC', code:'Voltage_UnbalanceBC', selected:false },
-    { id:'voltage_unbalanced_c', name:'Voltage Unbalanced CA', code:'Voltage_UnbalanceCA', selected:false },
-    { id:'voltage_unbalanced_ll_worst', name:'Voltage Unbalanced LL Worst', code:'Voltage_UnbalanceLLWorst', selected:false },
-    { id:'voltage_unbalanced_an', name:'Voltage Unbalanced AN', code:'Voltage_UnbalanceAN', selected:true },
-    { id:'voltage_unbalanced_bn', name:'Voltage Unbalanced BN', code:'Voltage_UnbalanceBN', selected:false },
-    { id:'voltage_unbalanced_cn', name:'Voltage Unbalanced CN', code:'Voltage_UnbalanceCN', selected:false },
-    { id:'voltage_unbalanced_ln_worst', name:'Voltage Unbalanced LN Worst', code:'Voltage_UnbalanceLNWorst', selected:false },
-  ])
+const VoltageOptions = ({ onChangeOptions, optionsData }) => {
+  const [options, setOptions] = useState(optionsData)
   const changeOptions = item => {
     const newItem = { ...item, selected:!item.selected }
     const newOptions = options.map(e => {
@@ -140,5 +131,6 @@ const VoltageOptions = ({ onChangeOptions }) => {
   )
 }
 VoltageOptions.propTypes = {
-  onChangeOptions:propTypes.func
+  onChangeOptions:propTypes.func,
+  optionsData:propTypes.array
 }

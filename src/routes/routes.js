@@ -35,6 +35,10 @@ const energy = Loadable({
   loader: () => import('./energy'),
   loading: Loading,
 })
+const settings = Loadable({
+  loader:() => import('./settings'),
+  loading:Loading
+})
 
 const MainRoutesComponent = ({ location }) => {
   if (location.pathname === '/') return <Redirect to='/dashboard' />
@@ -46,6 +50,7 @@ const MainRoutesComponent = ({ location }) => {
       <Route path='/voltage' component={voltage} />
       <Route path='/power' component={power} />
       <Route path='/energy' component={energy} />
+      <Route path='/settings' component={settings} />
       <Redirect to='/error' />
     </Switch>
   )

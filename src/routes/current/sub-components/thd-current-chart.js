@@ -75,7 +75,7 @@ const THDCurrentChart = ({ thd_current, onChangeOptions }) => {
           </CardBody>
         </Card>
         <div className='current-options'>
-          <THDCurrent onChangeOptions={onChangeOptions} />
+          <THDCurrent optionsData={thd_current.options} onChangeOptions={onChangeOptions} />
         </div>
       </div>
     </Fragment>
@@ -106,14 +106,8 @@ Toggle.propTypes = {
   selected:propTypes.bool,
   onChange:propTypes.func
 }
-const THDCurrent = ({ onChangeOptions }) => {
-  const [options, setOptions] = useState([
-    { id:'thd_current_a', name:'THD Current A', code:'THDCurrentA', selected:true },
-    { id:'thd_current_b', name:'THD Current B', code:'THDCurrentB', selected:false },
-    { id:'thd_current_c', name:'THD Current C', code:'THDCurrentC', selected:false },
-    { id:'thd_current_n', name:'THD Current N', code:'THDCurrentN', selected:false },
-    { id:'thd_current_g', name:'THD Current G', code:'THDCurrentG', selected:false }
-  ])
+const THDCurrent = ({ onChangeOptions, optionsData }) => {
+  const [options, setOptions] = useState(optionsData)
   const changeOptions = item => {
     const newItem = { ...item, selected:!item.selected }
     const newOptions = options.map(e => {
@@ -137,5 +131,6 @@ const THDCurrent = ({ onChangeOptions }) => {
   )
 }
 THDCurrent.propTypes = {
-  onChangeOptions:propTypes.func
+  onChangeOptions:propTypes.func,
+  optionsData:propTypes.array
 }

@@ -7,7 +7,7 @@ import Select from '@material-ui/core/Select'
 const CustomDropdown = ({ data, onChange, value, label }) => {
 
   return (
-    <Fragment>
+    <div>
       <InputLabel style={{ color:'white' }} id='demo-simple-select-label'>{label}</InputLabel>
       <Select
         style={{ width:300 }}
@@ -20,7 +20,7 @@ const CustomDropdown = ({ data, onChange, value, label }) => {
           <MenuItem key={Math.random()} value={item.value}>{item.name}</MenuItem>
         ))}
       </Select>
-    </Fragment>
+    </div>
   )
 }
 CustomDropdown.propTypes = {

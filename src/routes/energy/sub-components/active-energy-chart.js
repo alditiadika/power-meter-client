@@ -75,7 +75,7 @@ const ActiveEnergyChart = ({ active_energy, onChangeOptions }) => {
           </CardBody>
         </Card>
         <div className='energy-options'>
-          <ActiveEnergyOptions onChangeOptions={onChangeOptions} />
+          <ActiveEnergyOptions optionsData={active_energy.options} onChangeOptions={onChangeOptions} />
         </div>
       </div>
     </Fragment>
@@ -106,13 +106,8 @@ Toggle.propTypes = {
   selected:propTypes.bool,
   onChange:propTypes.func
 }
-const ActiveEnergyOptions = ({ onChangeOptions }) => {
-  const [options, setOptions] = useState([
-    { id:'active_energy_delivered', name:'Active Energy Delivered', code:'ActiveEnergyDelivered', selected:true },
-    { id:'active_energy_received', name:'Active Energy Received', code:'ActiveEnergyReceived', selected:false },
-    { id:'active_energy_delivered_received', name:'Active Energy Delivered Received', code:'ActiveEnergyDeliveredReceived', selected:false },
-    { id:'active_energy_delivered_minus_received', name:'Active Energy Delivered - Received', code:'ActiveEnergyDeliveredMinusReceived', selected:false }
-  ])
+const ActiveEnergyOptions = ({ onChangeOptions, optionsData }) => {
+  const [options, setOptions] = useState(optionsData)
   const changeOptions = item => {
     const newItem = { ...item, selected:!item.selected }
     const newOptions = options.map(e => {
@@ -136,5 +131,6 @@ const ActiveEnergyOptions = ({ onChangeOptions }) => {
   )
 }
 ActiveEnergyOptions.propTypes = {
-  onChangeOptions:propTypes.func
+  onChangeOptions:propTypes.func,
+  optionsData:propTypes.array
 }

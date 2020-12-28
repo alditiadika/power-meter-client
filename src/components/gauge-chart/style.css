@@ -1,0 +1,13 @@
+.gauge-text {
+  display: grid;
+  grid-template-columns: 32px auto 32px;
+  padding: 0px 45px;
+}
+.gauge-text-value {
+  justify-self: center;
+  font-size: x-large;
+  margin-top: -50px;
+}
+.gauge-text-min-max {
+  justify-self: center;
+}

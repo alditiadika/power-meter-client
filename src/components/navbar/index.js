@@ -1,26 +1,31 @@
 import React, { Fragment } from 'react'
+import { useHistory } from 'react-router-dom'
 import propTypes from 'prop-types'
 import './style.css'
 import CustomDropdown from '../dropdown'
+import Settings from '../../assets/img/settings-selected.png'
 
-const NavbarComponent = () => {
+const NavbarComponent = ({ showSettings = false }) => {
+  const history = useHistory()
+  const changeRoute = () => {
+    history.push('/')
+    history.push('/settings')
+  }
   return (
     <Fragment>
-      <div style={{ padding:20 }}>
+      <div className='custom-navbar' style={{ padding:20 }}>
         <CustomDropdown
-          label='Gateway'
+          label='Panel'
           value={{ value:'gateway_1', name:'Gateway 1' }}
           data={[{ name:'Gateway 1', value:'gateway_1' }]}
           onChange={() => {}}
         />
+        <img hidden={!showSettings} onClick={changeRoute} src={Settings} className='settings-dashboard' />
       </div>
     </Fragment>
   )
 }
 export default NavbarComponent
 NavbarComponent.propTypes = {
-  logout:propTypes.func,
-  colapsed:propTypes.bool,
-  setLanguage:propTypes.func,
-  lang:propTypes.any
+  showSettings:propTypes.bool
 }

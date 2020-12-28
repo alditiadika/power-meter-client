@@ -75,7 +75,7 @@ const ApparentEnergyChart = ({ apparent_energy, onChangeOptions }) => {
           </CardBody>
         </Card>
         <div className='energy-options'>
-          <ApparentEnergyOptions onChangeOptions={onChangeOptions} />
+          <ApparentEnergyOptions optionsData={apparent_energy.options} onChangeOptions={onChangeOptions} />
         </div>
       </div>
     </Fragment>
@@ -106,13 +106,8 @@ Toggle.propTypes = {
   selected:propTypes.bool,
   onChange:propTypes.func
 }
-const ApparentEnergyOptions = ({ onChangeOptions }) => {
-  const [options, setOptions] = useState([
-    { id:'apparent_energy_delivered', name:'Apparent Energy Delivered', code:'ApparentEnergyEnergyDelivered', selected:true },
-    { id:'apparent_energy_received', name:'Apparent Energy Received', code:'ApparentEnergyEnergyReceived', selected:false },
-    { id:'apparent_energy_delivered_received', name:'Apparent Energy Delivered Received', code:'ApparentEnergyEnergyDeliveredReceived', selected:false },
-    { id:'apparent_energy_delivered_minus_received', name:'Apparent Energy Delivered - Received', code:'ApparentEnergyEnergyDeliveredMinusReceived', selected:false }
-  ])
+const ApparentEnergyOptions = ({ onChangeOptions, optionsData }) => {
+  const [options, setOptions] = useState(optionsData)
   const changeOptions = item => {
     const newItem = { ...item, selected:!item.selected }
     const newOptions = options.map(e => {
@@ -136,5 +131,6 @@ const ApparentEnergyOptions = ({ onChangeOptions }) => {
   )
 }
 ApparentEnergyOptions.propTypes = {
-  onChangeOptions:propTypes.func
+  onChangeOptions:propTypes.func,
+  optionsData:propTypes.array
 }

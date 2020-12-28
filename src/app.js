@@ -5,6 +5,8 @@ import { HashRouter, Switch, Route } from 'react-router-dom'
 import { error } from './routes/routes'
 import ErrorBoundary from './components/error/error-boundary'
 import MainApp from './routes'
+import { connect } from 'react-redux'
+import { settingsActions } from './redux/actions'
 
 const RootRoute = ({ match }) => {
   return (
@@ -19,6 +21,9 @@ const RootRoute = ({ match }) => {
   )
 }
 class App extends Component {
+  UNSAFE_componentWillMount() {
+    this.props.inilializeSettings()
+  }
   render() {
     return (
       <Fragment>
@@ -31,11 +36,15 @@ class App extends Component {
     )
   }
 }
-export default App
+const mapStateToProps = () => ({})
+const mapDispatchToProps = {
+  inilializeSettings:settingsActions.onInitializeSettings
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App)
 
 RootRoute.propTypes = {
   match: propTypes.object
 }
 App.propTypes = {
-  checkAuthentication: propTypes.func
+  inilializeSettings:propTypes.func
 }

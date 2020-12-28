@@ -2,6 +2,13 @@ import { dashboardTypes } from '../types'
 
 const initialState = {
   data:{
+    gaugeChartData:{
+      voltage:0,
+      current:0,
+      power:0,
+      power_factor:0,
+      energy:0
+    },
     voltage:{ 
       loading:true, 
       rawData:[], 
@@ -149,6 +156,19 @@ const dashboardReducer = (state = { ...initialState }, action) => {
           }
         }
       }
+    }
+    case dashboardTypes.GET_DATA_GAUGE_CHART: {
+      const { isError, data } = action.payload
+      if(!isError) {
+        return {
+          ...state,
+          data:{
+            ...state.data,
+            gaugeChartData:data
+          }
+        }
+      }
+      return state
     }
     default:
       return state

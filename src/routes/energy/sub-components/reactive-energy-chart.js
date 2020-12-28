@@ -75,7 +75,7 @@ const ReactiveEnergyChart = ({ reactive_energy, onChangeOptions }) => {
           </CardBody>
         </Card>
         <div className='energy-options'>
-          <ReactiveEnergyOptions onChangeOptions={onChangeOptions} />
+          <ReactiveEnergyOptions optionsData={reactive_energy.options} onChangeOptions={onChangeOptions} />
         </div>
       </div>
     </Fragment>
@@ -106,13 +106,8 @@ Toggle.propTypes = {
   selected:propTypes.bool,
   onChange:propTypes.func
 }
-const ReactiveEnergyOptions = ({ onChangeOptions }) => {
-  const [options, setOptions] = useState([
-    { id:'reactive_energy_delivered', name:'Reactive Energy Delivered', code:'ReactiveEnergyDelivered', selected:true },
-    { id:'reactive_energy_received', name:'Reactive Energy Received', code:'ReactiveEnergyReceived', selected:false },
-    { id:'reactive_energy_delivered_received', name:'Reactive Energy Delivered Received', code:'ReactiveEnergyDeliveredReceived', selected:false },
-    { id:'reactive_energy_delivered_minus_received', name:'Reactive Energy Delivered - Received', code:'ReactiveEnergyDeliveredMinusReceived', selected:false }
-  ])
+const ReactiveEnergyOptions = ({ onChangeOptions, optionsData }) => {
+  const [options, setOptions] = useState(optionsData)
   const changeOptions = item => {
     const newItem = { ...item, selected:!item.selected }
     const newOptions = options.map(e => {
@@ -136,5 +131,6 @@ const ReactiveEnergyOptions = ({ onChangeOptions }) => {
   )
 }
 ReactiveEnergyOptions.propTypes = {
-  onChangeOptions:propTypes.func
+  onChangeOptions:propTypes.func,
+  optionsData:propTypes.array
 }

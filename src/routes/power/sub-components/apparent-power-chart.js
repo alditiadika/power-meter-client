@@ -75,7 +75,7 @@ const ApparentPowerChart = ({ apparent_power, onChangeOptions }) => {
           </CardBody>
         </Card>
         <div className='power-options'>
-          <ApparentPowerOptions onChangeOptions={onChangeOptions} />
+          <ApparentPowerOptions optionsData={apparent_power.options} onChangeOptions={onChangeOptions} />
         </div>
       </div>
     </Fragment>
@@ -106,13 +106,8 @@ Toggle.propTypes = {
   selected:propTypes.bool,
   onChange:propTypes.func
 }
-const ApparentPowerOptions = ({ onChangeOptions }) => {
-  const [options, setOptions] = useState([
-    { id:'apparent_power_a', name:'Apparent Power A', code:'Apparent_Power_A', selected:true },
-    { id:'apparent_power_b', name:'Apparent Power B', code:'Apparent_Power_B', selected:false },
-    { id:'apparent_power_c', name:'Apparent Power C', code:'Apparent_Power_C', selected:false },
-    { id:'apparent_power_total', name:'Apparent Power Total', code:'Apparent_Power_Total', selected:false }
-  ])
+const ApparentPowerOptions = ({ onChangeOptions, optionsData }) => {
+  const [options, setOptions] = useState(optionsData)
   const changeOptions = item => {
     const newItem = { ...item, selected:!item.selected }
     const newOptions = options.map(e => {
@@ -137,4 +132,5 @@ const ApparentPowerOptions = ({ onChangeOptions }) => {
 }
 ApparentPowerOptions.propTypes = {
   onChangeOptions:propTypes.func,
+  optionsData:propTypes.array
 }
