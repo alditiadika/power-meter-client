@@ -1,0 +1,10 @@
+{
+  "App":{
+    "NAME":"mqtt-client",
+    "VERSION":"cache-version",
+    "DEVELOPMENT":true
+  },
+  "SERVICE":{
+    "POWER_METER_SERVICE":"http://localhost:8080"
+  }
+}
