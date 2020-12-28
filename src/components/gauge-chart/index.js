@@ -25,7 +25,6 @@ const GaugeChart = ({ min, max, value, text }) => {
     .startAngle(angleStartRad)
     .endAngle(angleFilledRad)()
 
-  console.log({min, max, value, percentScale, pembilang:value - min, angleFilledRad, rotate:-115 + (230*percentScale)})
   return (
     <div style={{ width:r + 60, height:r }}>
       <svg width={r + 60} height={0.5*r + 60}>

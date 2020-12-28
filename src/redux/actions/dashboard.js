@@ -119,6 +119,22 @@ const dashboardActions = {
       console.log(e)
       dispatch({ type:dashboardTypes.GET_DATA_ENERGY, payload:{ isError:true } })
     }
+  },
+  getDataGaugeChart: sensor => async dispatch => {
+    try {
+      const { data } = await axios.get(`${SERVICE.POWER_METER_SERVICE}/gauge?sensor=${sensor ? sensor:'gateway_1'}`)
+      if(data.status === 200) {
+        const payload = {
+          isError:false,
+          data:data.message
+        }
+        dispatch({ type:dashboardTypes.GET_DATA_GAUGE_CHART, payload })
+      }
+    } catch(e) {
+      console.log('error catch')
+      console.log(e)
+      dispatch({ type:dashboardTypes.GET_DATA_GAUGE_CHART, payload:{ isError:true } })
+    }
   }
 }
 export default dashboardActions
