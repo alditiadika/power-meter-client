@@ -70,6 +70,6 @@ SettingsDashboard.propTypes = {
   dataTable:propTypes.array,
   onClickEdit:propTypes.func,
   onDiscard:propTypes.func,
-  onDiscard:propTypes.func,
+  onChangeDataItem:propTypes.func,
   onSaveDataItem:propTypes.func
 }

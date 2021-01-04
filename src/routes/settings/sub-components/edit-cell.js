@@ -16,5 +16,6 @@ EditCell.propTypes = {
   inEdit:propTypes.bool,
   onChangeDataItem:propTypes.func,
   value:propTypes.any,
-  field:propTypes.string
+  field:propTypes.string,
+  dataItem:propTypes.object
 }

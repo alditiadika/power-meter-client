@@ -10,7 +10,7 @@ const EditComponent = ({ onEdit, onDiscard, onSave, inEdit }) => {
       <img style={{ marginRight:15, width:15, height:15 }} onClick={onDiscard} src={Cancel} />
       <img onClick={onSave} src={Save} />
     </Fragment>
-    ): (
+  ): (
     <img src={EditIcon} onClick={onEdit} />
   )
 }
@@ -19,6 +19,5 @@ EditComponent.propTypes = {
   onEdit:propTypes.func,
   inEdit:propTypes.bool,
   onSave:propTypes.func,
-  onEdit:propTypes.func,
   onDiscard:propTypes.func
 }

@@ -8,7 +8,7 @@ import './style.css'
 import VoltageChart from './sub-components/voltage-chart'
 import VoltageUnbalancedChart from './sub-components/voltage-unbalanced-chart'
 
-const Voltage = ({ getData, voltage, voltage_unbalanced,  dataLoad }) => {
+const Voltage = ({ getData, voltage, voltage_unbalanced,  dataLoad, websocket, changeLineChartData }) => {
   useEffect(() => {
     getDataOnChangeOptions()
   }, [dataLoad.isLoad])
@@ -17,6 +17,19 @@ const Voltage = ({ getData, voltage, voltage_unbalanced,  dataLoad }) => {
     getVoltage()
     getUnbalanceedVoltage()
   }, [])
+  useEffect(() => { 
+    const { topicCode, message, created_date, topic, gateway } = websocket.data
+    if(topicCode) {
+      const addedData = {
+        created_date,
+        value:parseFloat(message),
+        sensor:gateway,
+        topic,
+        topicCode
+      }
+      changeLineChartData(addedData)
+    }
+  }, [websocket.data])
   const getVoltage = () => {
     voltage.options.filter(e => e.selected)
       .forEach(item => {
@@ -65,15 +78,19 @@ const Voltage = ({ getData, voltage, voltage_unbalanced,  dataLoad }) => {
   )
 }
 const mapStateToProps = s => ({
-  ...s.voltageReducer
+  ...s.voltageReducer,
+  websocket:s.websocketReducer 
 })
 const mapDispatchToProps = {
-  getData:voltageActions.getData
+  getData:voltageActions.getData,
+  changeLineChartData:voltageActions.changeLineChartData
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Voltage)
 Voltage.propTypes = {
   getData:propTypes.func,
   voltage:propTypes.object,
   voltage_unbalanced:propTypes.object,
-  dataLoad:propTypes.object
+  dataLoad:propTypes.object,
+  websocket:propTypes.object,
+  changeLineChartData:propTypes.func
 }

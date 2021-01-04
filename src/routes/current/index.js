@@ -8,7 +8,7 @@ import Navbar from '../../components/navbar'
 import CurrentChart from './sub-components/current-chart'
 import THDCurrentChart from './sub-components/thd-current-chart'
 
-const CurrentComponent = ({ getData, current, thd_current,  dataLoad }) => {
+const CurrentComponent = ({ getData, current, thd_current, dataLoad, websocket, changeLineChartData }) => {
   useEffect(() => {
     getDataOnChangeOptions()
   }, [dataLoad.isLoad])
@@ -17,6 +17,19 @@ const CurrentComponent = ({ getData, current, thd_current,  dataLoad }) => {
     getCurrent()
     getTHDCurrent()
   }, [])
+  useEffect(() => { 
+    const { topicCode, message, created_date, topic, gateway } = websocket.data
+    if(topicCode) {
+      const addedData = {
+        created_date,
+        value:parseFloat(message),
+        sensor:gateway,
+        topic,
+        topicCode
+      }
+      changeLineChartData(addedData)
+    }
+  }, [websocket.data])
   const getCurrent = () => {
     current.options.filter(e => e.selected)
       .forEach(item => {
@@ -65,15 +78,19 @@ const CurrentComponent = ({ getData, current, thd_current,  dataLoad }) => {
   )
 }
 const mapStateToProps = s => ({
-  ...s.currentReducer
+  ...s.currentReducer,
+  websocket:s.websocketReducer 
 })
 const mapDispatchToProps = {
-  getData:currentActions.getData
+  getData:currentActions.getData,
+  changeLineChartData:currentActions.changeLineChartData
 }
 export default connect(mapStateToProps, mapDispatchToProps)(CurrentComponent)
 CurrentComponent.propTypes = {
   getData:propTypes.func,
   current:propTypes.object,
   thd_current:propTypes.object,
-  dataLoad:propTypes.object
+  dataLoad:propTypes.object,
+  changeLineChartData:propTypes.func,
+  websocket:propTypes.object
 }

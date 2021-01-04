@@ -4,6 +4,7 @@ import currentActions from './current'
 import powerActions from './power'
 import energyActions from './energy'
 import settingsActions from './settings'
+import websocketActions from './websocket'
 
 export {
   dashboardActions,
@@ -11,5 +12,6 @@ export {
   currentActions,
   powerActions,
   energyActions,
-  settingsActions
+  settingsActions,
+  websocketActions
 }

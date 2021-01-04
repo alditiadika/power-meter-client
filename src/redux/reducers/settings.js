@@ -25,7 +25,7 @@ const initialState = {
 
 const settingsReducer = (state = { ...initialState }, action) => {
   switch(action.type) {
-    case settingsTypes.INITIALIZE_SETTINGS:{
+    case settingsTypes.INITIALIZE_SETTINGS: {
       const { dataTable, isEmpty } = action.payload
       if(isEmpty) {
         localStorage.setItem('settingsDatatable', JSON.stringify(state.dataTable))
@@ -38,7 +38,7 @@ const settingsReducer = (state = { ...initialState }, action) => {
         dataTable
       }
     }
-    case settingsTypes.ONCHANGE_DATAITEM:{
+    case settingsTypes.ONCHANGE_DATAITEM: {
       const { field, dataItem, value } = action.payload
       const dataTable = state.dataTable.map(item => {
         if(item.id === dataItem.id) {
@@ -54,7 +54,7 @@ const settingsReducer = (state = { ...initialState }, action) => {
         dataTable
       }
     }
-    case settingsTypes.ONCLICK_EDIT:{
+    case settingsTypes.ONCLICK_EDIT: {
       const { dataItem } = action.payload
       const dataTable = state.dataTable.map(item => {
         if(item.id === dataItem.id) {
@@ -89,7 +89,7 @@ const settingsReducer = (state = { ...initialState }, action) => {
         temporaryDataItem:{}
       }
     }
-    case settingsTypes.ON_SAVE:{
+    case settingsTypes.ON_SAVE: {
       const dataTable = state.dataTable.map(item => ({ ...item, inEdit:false }))
       const dataObj = generator(dataTable)
       localStorage.setItem('settingsDatatable', JSON.stringify(dataTable))

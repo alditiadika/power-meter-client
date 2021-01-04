@@ -1,3 +1,4 @@
+import * as time from 'd3-time'
 import { dashboardTypes } from '../types'
 
 const initialState = {
@@ -169,6 +170,41 @@ const dashboardReducer = (state = { ...initialState }, action) => {
         }
       }
       return state
+    }
+    case dashboardTypes.CHANGE_GAUGE_DATA: {
+      const { dataType, value } = action.payload
+      return {
+        ...state,
+        data:{
+          ...state.data,
+          gaugeChartData:{
+            ...state.data.gaugeChartData,
+            [dataType]:value
+          }
+        }
+      }
+    }
+    case dashboardTypes.CHANGE_LINE_CHART_DATA: {
+      const { dataType, addedRawData } = action.payload
+      const slicedData = state.data[dataType].rawData.slice(1)
+      const rawData = slicedData.concat(addedRawData)
+      const timeSeries = rawData.map(item => ({ x:time.timeMinute.offset(new Date(item.created_date), 0), y:item.value }))
+      const val = rawData.map(item => item.value)
+      const minValue = Math.min(...val)
+      const maxValue = Math.max(...val)
+      return {
+        ...state,
+        data:{
+          ...state.data,
+          [dataType]:{
+            loading:false,
+            rawData,
+            timeSeries,
+            minValue,
+            maxValue
+          }
+        }
+      }
     }
     default:
       return state

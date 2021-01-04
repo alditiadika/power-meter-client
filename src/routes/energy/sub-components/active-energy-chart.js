@@ -47,7 +47,7 @@ const ActiveEnergyChart = ({ active_energy, onChangeOptions }) => {
                 axisBottom={{
                   format: '%H:%M',
                   tickRotation:-41,
-                  tickValues: 'every 15 minutes',
+                  tickValues: 'every 60 minutes',
                 }}
                 sliceTooltip={({ slice }) => {
                   return (

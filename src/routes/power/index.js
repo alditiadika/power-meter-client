@@ -11,7 +11,16 @@ import ReactivePowerChart from './sub-components/reactive-power-chart'
 import ApparentPowerChart from './sub-components/apparent-power-chart'
 import PowerFactorChart from './sub-components/power-factor-chart'
 
-const PowerComponent = ({ getData, active_power, reactive_power, apparent_power, power_factor, dataLoad }) => {
+const PowerComponent = ({ 
+  getData, 
+  active_power, 
+  reactive_power, 
+  apparent_power, 
+  power_factor, 
+  dataLoad, 
+  websocket, 
+  changeLineChartData  
+}) => {
   useEffect(() => {
     getActivePower()
     getReactivePower()
@@ -21,6 +30,19 @@ const PowerComponent = ({ getData, active_power, reactive_power, apparent_power,
   useEffect(() => {
     getDataOnChangeOptions()
   }, [dataLoad.isLoad])
+  useEffect(() => { 
+    const { topicCode, message, created_date, topic, gateway } = websocket.data
+    if(topicCode) {
+      const addedData = {
+        created_date,
+        value:parseFloat(message),
+        sensor:gateway,
+        topic,
+        topicCode
+      }
+      changeLineChartData(addedData)
+    }
+  }, [websocket.data])
   const getActivePower = () => {
     active_power.options.filter(e => e.selected)
       .forEach(item => {
@@ -128,10 +150,12 @@ const PowerComponent = ({ getData, active_power, reactive_power, apparent_power,
   )
 }
 const mapStateToProps = s => ({
-  ...s.powerReducer
+  ...s.powerReducer,
+  websocket:s.websocketReducer 
 })
 const mapDispatchToProps = {
-  getData:powerActions.getData
+  getData:powerActions.getData,
+  changeLineChartData:powerActions.changeLineChartData
 }
 export default connect(mapStateToProps, mapDispatchToProps)(PowerComponent)
 PowerComponent.propTypes = {
@@ -140,5 +164,7 @@ PowerComponent.propTypes = {
   reactive_power:propTypes.object,
   apparent_power:propTypes.object,
   power_factor:propTypes.object,
-  dataLoad:propTypes.object
+  dataLoad:propTypes.object,
+  changeLineChartData:propTypes.func,
+  websocket:propTypes.object
 }

@@ -1,3 +1,4 @@
+import * as time from 'd3-time'
 import { currentTypes } from '../types'
 
 const initialState = {
@@ -115,6 +116,44 @@ const currentReducer = (state = { ...initialState }, action) => {
           options
         }
       }
+    }
+    case currentTypes.REFRESH_REDUCER: {
+      return {
+        ...initialState,
+        current:{
+          ...initialState.current,
+          options:state.current.options
+        },
+        thd_current:{
+          ...initialState.thd_current,
+          options:state.thd_current.options
+        }
+      }
+    }
+    case currentTypes.CHANGE_LINE_CHART_DATA: {
+      const { dataType, addedRawData } = action.payload
+      const option = state[dataType].options.find(x => x.code === addedRawData.topicCode)
+      if(option) {
+        const slicedData = state[dataType][option.id].rawData.slice(1)
+        const rawData = slicedData.concat(addedRawData)
+        const timeSeries = rawData.map(item => ({ x:time.timeMinute.offset(new Date(item.created_date), 0), y:item.value }))
+        const val = rawData.map(item => item.value)
+        const minValue = Math.min(...val)
+        const maxValue = Math.max(...val)
+        return {
+          ...state,
+          [dataType]:{
+            ...state[dataType],
+            [option.id]: {
+              rawData,
+              timeSeries,
+              minValue,
+              maxValue
+            }
+          }
+        }
+      }
+      return { ...state }
     }
     default:
       return {

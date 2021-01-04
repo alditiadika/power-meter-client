@@ -5,6 +5,7 @@ import currentReducer from './current'
 import powerReducer from './power'
 import energyReducer from './energy'
 import settingsReducer from './settings'
+import websocketReducer from './websocket'
 
 const rootReducer = combineReducers({
   dashboardReducer,
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
   currentReducer,
   powerReducer,
   energyReducer,
-  settingsReducer
+  settingsReducer,
+  websocketReducer
 })
 export default rootReducer

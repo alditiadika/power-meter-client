@@ -1,12 +1,14 @@
 import React, { Fragment, Component } from 'react'
 import propTypes from 'prop-types'
 import { HashRouter, Switch, Route } from 'react-router-dom'
+import socketIO from 'socket.io-client'
 
 import { error } from './routes/routes'
 import ErrorBoundary from './components/error/error-boundary'
 import MainApp from './routes'
 import { connect } from 'react-redux'
-import { settingsActions } from './redux/actions'
+import { settingsActions, websocketActions } from './redux/actions'
+import { SERVICE } from './config/config.json'
 
 const RootRoute = ({ match }) => {
   return (
@@ -23,6 +25,34 @@ const RootRoute = ({ match }) => {
 class App extends Component {
   UNSAFE_componentWillMount() {
     this.props.inilializeSettings()
+    this.socketConnector()
+  }
+  socketConnector = () => {
+    try {
+      if(this.props.ws) {
+        console.log('closing old websocket', this.props.ws.close)
+        this.props.ws.close()
+      }
+      const socket = socketIO(SERVICE.POWER_METER_SERVICE)
+      socket.on('connect', () => {
+        console.log('connected to websocket')
+        this.props.initWS(socket)
+      })
+      socket.on('disconnect', () => {
+        console.log('websocket disconnect.. try to reconnect')
+        this.socketConnector()
+      })
+      socket.on('error', () => {
+        console.log('websocket error.. try to reconnect')
+        this.socketConnector()
+      })
+      socket.on('notification', data => {
+        this.props.dispatchWebsocketData(data)
+      })
+    } catch(e) {
+      console.log('catch error when connect to websocket')
+      console.log(e)
+    }
   }
   render() {
     return (
@@ -36,9 +66,13 @@ class App extends Component {
     )
   }
 }
-const mapStateToProps = () => ({})
+const mapStateToProps = state => ({
+  ...state.websocketReducer
+})
 const mapDispatchToProps = {
-  inilializeSettings:settingsActions.onInitializeSettings
+  inilializeSettings:settingsActions.onInitializeSettings,
+  initWS:websocketActions.initialize,
+  dispatchWebsocketData:websocketActions.dispatchData
 }
 export default connect(mapStateToProps, mapDispatchToProps)(App)
 
@@ -46,5 +80,8 @@ RootRoute.propTypes = {
   match: propTypes.object
 }
 App.propTypes = {
-  inilializeSettings:propTypes.func
+  inilializeSettings:propTypes.func,
+  initWS:propTypes.func,
+  ws:propTypes.any,
+  dispatchWebsocketData:propTypes.func
 }

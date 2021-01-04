@@ -10,7 +10,14 @@ import ActiveEnergyChart from './sub-components/active-energy-chart'
 import ReactiveEnergyChart from './sub-components/reactive-energy-chart'
 import ApparentEnergy from './sub-components/apparent-energy-chart'
 
-const EnergyComponent = ({ getData, active_energy, reactive_energy, apparent_energy, dataLoad }) => {
+const EnergyComponent = ({ 
+  getData, 
+  active_energy, 
+  reactive_energy, 
+  apparent_energy, 
+  dataLoad, 
+  websocket, 
+  changeLineChartData  }) => {
   useEffect(() => {
     getActiveEnergy()
     getReactiveEnergy()
@@ -19,6 +26,19 @@ const EnergyComponent = ({ getData, active_energy, reactive_energy, apparent_ene
   useEffect(() => {
     getDataOnChangeOptions()
   }, [dataLoad.isLoad])
+  useEffect(() => { 
+    const { topicCode, message, created_date, topic, gateway } = websocket.data
+    if(topicCode) {
+      const addedData = {
+        created_date,
+        value:parseFloat(message),
+        sensor:gateway,
+        topic,
+        topicCode
+      }
+      changeLineChartData(addedData)
+    }
+  }, [websocket.data])
   const getActiveEnergy = () => {
     active_energy.options.filter(e => e.selected)
       .forEach(item => {
@@ -103,10 +123,12 @@ const EnergyComponent = ({ getData, active_energy, reactive_energy, apparent_ene
   )
 }
 const mapStateToProps = s => ({
-  ...s.energyReducer
+  ...s.energyReducer,
+  websocket:s.websocketReducer 
 })
 const mapDispatchToProps = {
-  getData:energyActions.getData
+  getData:energyActions.getData,
+  changeLineChartData:energyActions.changeLineChartData
 }
 export default connect(mapStateToProps, mapDispatchToProps)(EnergyComponent)
 EnergyComponent.propTypes = {
@@ -114,5 +136,7 @@ EnergyComponent.propTypes = {
   active_energy:propTypes.object,
   reactive_energy:propTypes.object,
   apparent_energy:propTypes.object,
-  dataLoad:propTypes.object
+  dataLoad:propTypes.object,
+  changeLineChartData:propTypes.func,
+  websocket:propTypes.object
 }
