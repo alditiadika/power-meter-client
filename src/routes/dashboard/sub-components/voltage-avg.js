@@ -9,12 +9,13 @@ import { dashboardActions } from '../../../redux/actions'
 import { Card, CardBody, Cardheader } from '../../../components/card'
 import { generalChartProperties } from '../../../utils/general-chart-properties'
 
-const VoltageAVG = ({ getData, data }) => {
+const VoltageAVG = ({ getData, data, settings }) => {
+  const selectedGateway = settings.navbarOptions.find(x => x.selected)
   const [localData, setLocalData] = useState([])
   const history = useHistory()
   useEffect(() => {
-    getData()
-  }, [])
+    getData(selectedGateway.code)
+  }, [selectedGateway])
   useEffect(() => {
     setLocalData([{ id:'A', data:data.voltage.timeSeries }])
   }, [data.voltage.timeSeries])
@@ -70,7 +71,8 @@ const VoltageAVG = ({ getData, data }) => {
   )
 }
 const mapStateToProps = s =>({
-  ...s.dashboardReducer
+  ...s.dashboardReducer,
+  settings:s.settingsReducer
 })
 const mapDispatchToProps = {
   getData:dashboardActions.getDataVoltage
@@ -78,5 +80,6 @@ const mapDispatchToProps = {
 export default connect(mapStateToProps, mapDispatchToProps)(VoltageAVG)
 VoltageAVG.propTypes = {
   getData:propTypes.func,
-  data:propTypes.object
+  data:propTypes.object,
+  settings:propTypes.object
 }

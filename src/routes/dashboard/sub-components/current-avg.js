@@ -9,12 +9,13 @@ import { Card, CardBody, Cardheader } from '../../../components/card'
 import { useHistory } from 'react-router-dom'
 import { generalChartProperties } from '../../../utils/general-chart-properties'
 
-const CurrentAVG = ({ getData, data }) => {
+const CurrentAVG = ({ getData, data, settings }) => {
+  const selectedGateway = settings.navbarOptions.find(x => x.selected)
   const history = useHistory()
   const [localData, setLocalData] = useState([])
   useEffect(() => {
-    getData()
-  }, [])
+    getData(selectedGateway.code)
+  }, [selectedGateway])
   useEffect(() => {
     setLocalData([{ id:'A', data:data.current.timeSeries }])
   }, [data.current.timeSeries])
@@ -70,7 +71,8 @@ const CurrentAVG = ({ getData, data }) => {
   )
 }
 const mapStateToProps = s =>({
-  ...s.dashboardReducer
+  ...s.dashboardReducer,
+  settings:s.settingsReducer
 })
 const mapDispatchToProps = {
   getData:dashboardActions.getDataCurrent
@@ -78,5 +80,6 @@ const mapDispatchToProps = {
 export default connect(mapStateToProps, mapDispatchToProps)(CurrentAVG)
 CurrentAVG.propTypes = {
   getData:propTypes.func,
-  data:propTypes.object
+  data:propTypes.object,
+  settings:propTypes.object
 }

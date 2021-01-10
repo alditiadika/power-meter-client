@@ -24,7 +24,12 @@ const RootRoute = ({ match }) => {
 }
 class App extends Component {
   UNSAFE_componentWillMount() {
-    this.props.inilializeSettings()
+    this.props.initializeNavbar()
+    setTimeout(() => {
+      const { navbarOptions } = this.props.settings
+      const selectedGateway = navbarOptions.find(x => x.selected)
+      this.props.inilializeSettings(selectedGateway)
+    }, 1000)
     this.socketConnector()
   }
   socketConnector = () => {
@@ -67,10 +72,12 @@ class App extends Component {
   }
 }
 const mapStateToProps = state => ({
-  ...state.websocketReducer
+  ...state.websocketReducer,
+  settings:state.settingsReducer
 })
 const mapDispatchToProps = {
   inilializeSettings:settingsActions.onInitializeSettings,
+  initializeNavbar:settingsActions.onInitializeNavbar,
   initWS:websocketActions.initialize,
   dispatchWebsocketData:websocketActions.dispatchData
 }
@@ -81,7 +88,9 @@ RootRoute.propTypes = {
 }
 App.propTypes = {
   inilializeSettings:propTypes.func,
+  initializeNavbar:propTypes.func,
   initWS:propTypes.func,
   ws:propTypes.any,
-  dispatchWebsocketData:propTypes.func
+  dispatchWebsocketData:propTypes.func,
+  settings:propTypes.object
 }

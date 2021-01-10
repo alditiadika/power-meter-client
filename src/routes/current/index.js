@@ -8,7 +8,8 @@ import Navbar from '../../components/navbar'
 import CurrentChart from './sub-components/current-chart'
 import THDCurrentChart from './sub-components/thd-current-chart'
 
-const CurrentComponent = ({ getData, current, thd_current, dataLoad, websocket, changeLineChartData }) => {
+const CurrentComponent = ({ getData, current, thd_current, dataLoad, websocket, changeLineChartData, settings }) => {
+  const selectedGateway = settings.navbarOptions.find(x => x.selected)
   useEffect(() => {
     getDataOnChangeOptions()
   }, [dataLoad.isLoad])
@@ -16,25 +17,27 @@ const CurrentComponent = ({ getData, current, thd_current, dataLoad, websocket, 
   useEffect(() => {
     getCurrent()
     getTHDCurrent()
-  }, [])
+  }, [selectedGateway])
   useEffect(() => { 
     const { topicCode, message, created_date, topic, gateway } = websocket.data
-    if(topicCode) {
-      const addedData = {
-        created_date,
-        value:parseFloat(message),
-        sensor:gateway,
-        topic,
-        topicCode
+    if(gateway === selectedGateway.code) {
+      if(topicCode) {
+        const addedData = {
+          created_date,
+          value:parseFloat(message),
+          sensor:gateway,
+          topic,
+          topicCode
+        }
+        changeLineChartData(addedData)
       }
-      changeLineChartData(addedData)
     }
   }, [websocket.data])
   const getCurrent = () => {
     current.options.filter(e => e.selected)
       .forEach(item => {
         getData({
-          sensor:'gateway_1',
+          sensor:selectedGateway.code,
           dataType:'current',
           subDataType:item.id,
           selectedOption:item
@@ -45,7 +48,7 @@ const CurrentComponent = ({ getData, current, thd_current, dataLoad, websocket, 
     thd_current.options.filter(e => e.selected)
       .forEach(item => {
         getData({
-          sensor:'gateway_1',
+          sensor:selectedGateway.code,
           dataType:'thd_current',
           subDataType:item.id,
           selectedOption:item
@@ -59,7 +62,7 @@ const CurrentComponent = ({ getData, current, thd_current, dataLoad, websocket, 
         const dataType = isUnbalanced ? 'thd_current': 'current'
         const subDataType = dataLoad.data.id
         getData({
-          sensor:'gateway_1',
+          sensor:selectedGateway.code,
           dataType,
           subDataType,
           selectedOption:dataLoad.data
@@ -79,7 +82,8 @@ const CurrentComponent = ({ getData, current, thd_current, dataLoad, websocket, 
 }
 const mapStateToProps = s => ({
   ...s.currentReducer,
-  websocket:s.websocketReducer 
+  websocket:s.websocketReducer,
+  settings:s.settingsReducer
 })
 const mapDispatchToProps = {
   getData:currentActions.getData,
@@ -92,5 +96,6 @@ CurrentComponent.propTypes = {
   thd_current:propTypes.object,
   dataLoad:propTypes.object,
   changeLineChartData:propTypes.func,
-  websocket:propTypes.object
+  websocket:propTypes.object,
+  settings:propTypes.object
 }

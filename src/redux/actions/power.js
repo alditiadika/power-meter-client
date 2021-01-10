@@ -5,7 +5,7 @@ import { powerTypes } from '../types'
 import { SERVICE } from '../../config/config.json'
 
 const PowerActions = {
-  getData:({ sensor = 'gateway_1', dataType, subDataType, selectedOption }) => async dispatch => {
+  getData:({ sensor, dataType, subDataType, selectedOption }) => async dispatch => {
     const topic = selectedOption.code
     try {
       const { data } = await axios.get(`${SERVICE.POWER_METER_SERVICE}?sensor=${sensor}&topic=${topic}`)

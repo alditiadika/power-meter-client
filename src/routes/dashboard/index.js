@@ -13,10 +13,11 @@ import TotalPower from './sub-components/total-power'
 import ActiveEnergyDelivered from './sub-components/energy'
 
 
-const Dashboard = ({ getDataGaugeChart, websocket, changeGaugeData, changeLineChartData }) => {
+const Dashboard = ({ getDataGaugeChart, websocket, changeGaugeData, changeLineChartData, settings }) => {
+  const selectedGateway = settings.navbarOptions.find(x => x.selected)
   useEffect(() => {
-    getDataGaugeChart()
-  }, [])
+    getDataGaugeChart(selectedGateway.code)
+  }, [selectedGateway])
   useEffect(() => {
     if(websocket.data.topicCode) {
       const { message, gateway, topic, created_date } = websocket.data
@@ -26,33 +27,35 @@ const Dashboard = ({ getDataGaugeChart, websocket, changeGaugeData, changeLineCh
         sensor:gateway,
         topic
       }
-      switch(websocket.data.topicCode) {
-        case 'Voltage_LN_Avg': {
-          changeGaugeData('voltage', parseFloat(message))
-          changeLineChartData('voltage', data)
-          break
+      if(gateway === selectedGateway.code) {
+        switch(websocket.data.topicCode) {
+          case 'Voltage_LN_Avg': {
+            changeGaugeData('voltage', parseFloat(message))
+            changeLineChartData('voltage', data)
+            break
+          }
+          case 'Current_Avg': {
+            changeGaugeData('current', parseFloat(message))
+            changeLineChartData('current', data)
+            break
+          }
+          case 'Active_Power_Total': {
+            changeGaugeData('power', parseFloat(message))
+            changeLineChartData('power', data)
+            break
+          }
+          case 'Power_Factor_Total': {
+            changeGaugeData('power_factor', parseFloat(message))
+            break
+          }
+          case 'ActiveEnergyDelivered': {
+            changeGaugeData('energy', parseFloat(message))
+            changeLineChartData('energy', data)
+            break
+          }
+          default:
+            break
         }
-        case 'Current_Avg': {
-          changeGaugeData('current', parseFloat(message))
-          changeLineChartData('current', data)
-          break
-        }
-        case 'Active_Power_Total': {
-          changeGaugeData('power', parseFloat(message))
-          changeLineChartData('power', data)
-          break
-        }
-        case 'Power_Factor_Total': {
-          changeGaugeData('power_factor', parseFloat(message))
-          break
-        }
-        case 'ActiveEnergyDelivered': {
-          changeGaugeData('energy', parseFloat(message))
-          changeLineChartData('energy', data)
-          break
-        }
-        default:
-          break
       }
     }
   }, [websocket.data])
@@ -72,7 +75,8 @@ const Dashboard = ({ getDataGaugeChart, websocket, changeGaugeData, changeLineCh
 }
 const mapStateToProps = s => ({ 
   ...s.dashboardReducer, 
-  websocket:s.websocketReducer 
+  websocket:s.websocketReducer ,
+  settings:s.settingsReducer
 })
 const mapDispatchToProps = {
   getDataGaugeChart:dashboardActions.getDataGaugeChart,
@@ -84,5 +88,6 @@ Dashboard.propTypes = {
   getDataGaugeChart:propTypes.func,
   changeGaugeData:propTypes.func,
   websocket:propTypes.object,
-  changeLineChartData:propTypes.func
+  changeLineChartData:propTypes.func,
+  settings:propTypes.object
 }

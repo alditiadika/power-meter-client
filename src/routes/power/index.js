@@ -19,35 +19,39 @@ const PowerComponent = ({
   power_factor, 
   dataLoad, 
   websocket, 
-  changeLineChartData  
+  changeLineChartData,
+  settings  
 }) => {
+  const selectedGateway = settings.navbarOptions.find(x => x.selected)
   useEffect(() => {
     getActivePower()
     getReactivePower()
     getApparentPower()
     getPowerFactor()
-  }, [])
+  }, [selectedGateway])
   useEffect(() => {
     getDataOnChangeOptions()
   }, [dataLoad.isLoad])
   useEffect(() => { 
     const { topicCode, message, created_date, topic, gateway } = websocket.data
-    if(topicCode) {
-      const addedData = {
-        created_date,
-        value:parseFloat(message),
-        sensor:gateway,
-        topic,
-        topicCode
+    if(gateway === selectedGateway.code) {
+      if(topicCode) {
+        const addedData = {
+          created_date,
+          value:parseFloat(message),
+          sensor:gateway,
+          topic,
+          topicCode
+        }
+        changeLineChartData(addedData)
       }
-      changeLineChartData(addedData)
     }
   }, [websocket.data])
   const getActivePower = () => {
     active_power.options.filter(e => e.selected)
       .forEach(item => {
         getData({
-          sensor:'gateway_1',
+          sensor:selectedGateway.code,
           dataType:'active_power',
           subDataType:item.id,
           selectedOption:item
@@ -58,7 +62,7 @@ const PowerComponent = ({
     reactive_power.options.filter(e => e.selected)
       .forEach(item => {
         getData({
-          sensor:'gateway_1',
+          sensor:selectedGateway.code,
           dataType:'reactive_power',
           subDataType:item.id,
           selectedOption:item
@@ -69,7 +73,7 @@ const PowerComponent = ({
     apparent_power.options.filter(e => e.selected)
       .forEach(item => {
         getData({
-          sensor:'gateway_1',
+          sensor:selectedGateway.code,
           dataType:'apparent_power',
           subDataType:item.id,
           selectedOption:item
@@ -80,7 +84,7 @@ const PowerComponent = ({
     power_factor.options.filter(e => e.selected)
       .forEach(item => {
         getData({
-          sensor:'gateway_1',
+          sensor:selectedGateway.code,
           dataType:'power_factor',
           subDataType:item.id,
           selectedOption:item
@@ -98,7 +102,7 @@ const PowerComponent = ({
           const dataType = 'active_power'
           const subDataType = dataLoad.data.id
           getData({
-            sensor:'gateway_1',
+            sensor:selectedGateway.code,
             dataType,
             subDataType,
             selectedOption:dataLoad.data
@@ -108,7 +112,7 @@ const PowerComponent = ({
           const dataType = 'reactive_power'
           const subDataType = dataLoad.data.id
           getData({
-            sensor:'gateway_1',
+            sensor:selectedGateway.code,
             dataType,
             subDataType,
             selectedOption:dataLoad.data
@@ -118,7 +122,7 @@ const PowerComponent = ({
           const dataType = 'apparent_power'
           const subDataType = dataLoad.data.id
           getData({
-            sensor:'gateway_1',
+            sensor:selectedGateway.code,
             dataType,
             subDataType,
             selectedOption:dataLoad.data
@@ -128,7 +132,7 @@ const PowerComponent = ({
           const dataType = 'power_factor'
           const subDataType = dataLoad.data.id
           getData({
-            sensor:'gateway_1',
+            sensor:selectedGateway.code,
             dataType,
             subDataType,
             selectedOption:dataLoad.data
@@ -151,7 +155,8 @@ const PowerComponent = ({
 }
 const mapStateToProps = s => ({
   ...s.powerReducer,
-  websocket:s.websocketReducer 
+  websocket:s.websocketReducer,
+  settings:s.settingsReducer 
 })
 const mapDispatchToProps = {
   getData:powerActions.getData,
@@ -166,5 +171,6 @@ PowerComponent.propTypes = {
   power_factor:propTypes.object,
   dataLoad:propTypes.object,
   changeLineChartData:propTypes.func,
-  websocket:propTypes.object
+  websocket:propTypes.object,
+  settings:propTypes.object
 }

@@ -4,7 +4,25 @@
     "VERSION":"cache-version",
     "DEVELOPMENT":true
   },
+  "DEFAULT_NAVBAR_OPTIONS":[
+    { "name":"Gateway 1", "code":"gateway_1", "selected":true, "inEdit":false },
+    { "name":"Gateway 2", "code":"gateway_2", "selected":false, "inEdit":false },
+    { "name":"Gateway 3", "code":"gateway_3", "selected":false, "inEdit":false },
+    { "name":"Gateway 4", "code":"gateway_4", "selected":false, "inEdit":false },
+    { "name":"Gateway 5", "code":"gateway_5", "selected":false, "inEdit":false },
+    { "name":"Gateway 6", "code":"gateway_6", "selected":false, "inEdit":false },
+    { "name":"Gateway 7", "code":"gateway_7", "selected":false, "inEdit":false },
+    { "name":"Gateway 8", "code":"gateway_8", "selected":false, "inEdit":false },
+    { "name":"Gateway 9", "code":"gateway_9", "selected":false, "inEdit":false },
+    { "name":"Gateway 10", "code":"gateway_10", "selected":false, "inEdit":false },
+    { "name":"Gateway 11", "code":"gateway_11", "selected":false, "inEdit":false },
+    { "name":"Gateway 12", "code":"gateway_12", "selected":false, "inEdit":false },
+    { "name":"Gateway 13", "code":"gateway_13", "selected":false, "inEdit":false },
+    { "name":"Gateway 14", "code":"gateway_14", "selected":false, "inEdit":false },
+    { "name":"Gateway 15", "code":"gateway_15", "selected":false, "inEdit":false },
+    { "name":"Gateway 16", "code":"gateway_16", "selected":false, "inEdit":false }
+  ],
   "SERVICE":{
-    "POWER_METER_SERVICE":"http://localhost:4000"
+    "POWER_METER_SERVICE":"http://103.130.129.123:4000"
   }
 }

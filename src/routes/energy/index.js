@@ -17,33 +17,38 @@ const EnergyComponent = ({
   apparent_energy, 
   dataLoad, 
   websocket, 
-  changeLineChartData  }) => {
+  changeLineChartData,
+  settings  
+}) => {
+  const selectedGateway = settings.navbarOptions.find(x => x.selected)
   useEffect(() => {
     getActiveEnergy()
     getReactiveEnergy()
     getApparentEnergy()
-  }, [])
+  }, [selectedGateway])
   useEffect(() => {
     getDataOnChangeOptions()
   }, [dataLoad.isLoad])
   useEffect(() => { 
     const { topicCode, message, created_date, topic, gateway } = websocket.data
-    if(topicCode) {
-      const addedData = {
-        created_date,
-        value:parseFloat(message),
-        sensor:gateway,
-        topic,
-        topicCode
+    if(gateway === selectedGateway.code) {
+      if(topicCode) {
+        const addedData = {
+          created_date,
+          value:parseFloat(message),
+          sensor:gateway,
+          topic,
+          topicCode
+        }
+        changeLineChartData(addedData)
       }
-      changeLineChartData(addedData)
     }
   }, [websocket.data])
   const getActiveEnergy = () => {
     active_energy.options.filter(e => e.selected)
       .forEach(item => {
         getData({
-          sensor:'gateway_1',
+          sensor:selectedGateway.code,
           dataType:'active_energy',
           subDataType:item.id,
           selectedOption:item
@@ -54,7 +59,7 @@ const EnergyComponent = ({
     reactive_energy.options.filter(e => e.selected)
       .forEach(item => {
         getData({
-          sensor:'gateway_1',
+          sensor:selectedGateway.code,
           dataType:'reactive_energy',
           subDataType:item.id,
           selectedOption:item
@@ -65,7 +70,7 @@ const EnergyComponent = ({
     apparent_energy.options.filter(e => e.selected)
       .forEach(item => {
         getData({
-          sensor:'gateway_1',
+          sensor:selectedGateway.code,
           dataType:'apparent_energy',
           subDataType:item.id,
           selectedOption:item
@@ -82,7 +87,7 @@ const EnergyComponent = ({
           const dataType = 'active_energy'
           const subDataType = dataLoad.data.id
           getData({
-            sensor:'gateway_1',
+            sensor:selectedGateway.code,
             dataType,
             subDataType,
             selectedOption:dataLoad.data
@@ -92,7 +97,7 @@ const EnergyComponent = ({
           const dataType = 'reactive_energy'
           const subDataType = dataLoad.data.id
           getData({
-            sensor:'gateway_1',
+            sensor:selectedGateway.code,
             dataType,
             subDataType,
             selectedOption:dataLoad.data
@@ -102,7 +107,7 @@ const EnergyComponent = ({
           const dataType = 'apparent_energy'
           const subDataType = dataLoad.data.id
           getData({
-            sensor:'gateway_1',
+            sensor:selectedGateway.code,
             dataType,
             subDataType,
             selectedOption:dataLoad.data
@@ -124,7 +129,8 @@ const EnergyComponent = ({
 }
 const mapStateToProps = s => ({
   ...s.energyReducer,
-  websocket:s.websocketReducer 
+  websocket:s.websocketReducer,
+  settings:s.settingsReducer 
 })
 const mapDispatchToProps = {
   getData:energyActions.getData,
@@ -138,5 +144,6 @@ EnergyComponent.propTypes = {
   apparent_energy:propTypes.object,
   dataLoad:propTypes.object,
   changeLineChartData:propTypes.func,
-  websocket:propTypes.object
+  websocket:propTypes.object,
+  settings:propTypes.object
 }

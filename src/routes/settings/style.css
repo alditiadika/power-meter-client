@@ -1,5 +1,5 @@
 .table-settings {
-  margin-top: 70px;
+  margin-top: 50px;
 }
 table {
   border-collapse: collapse;
@@ -19,4 +19,25 @@ tr:nth-child(even) {
   width: 20px;
   height: 20px;
   cursor: pointer;
+}
+.navbar-settings {
+  border: 1px solid white;
+  width: 500px;
+  padding:10px
+}
+.navbar-settings-item {
+  display: grid;
+  grid-template-columns: 60px auto 100px;
+  align-items: center;
+}
+.inedit {
+  grid-template-columns: 60px auto 30px 30px;
+}
+.navbar-settings img {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+.navbar-settings-edit-name {
+  margin-right: 10px;
 }

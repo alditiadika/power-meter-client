@@ -8,44 +8,47 @@ import './style.css'
 import VoltageChart from './sub-components/voltage-chart'
 import VoltageUnbalancedChart from './sub-components/voltage-unbalanced-chart'
 
-const Voltage = ({ getData, voltage, voltage_unbalanced,  dataLoad, websocket, changeLineChartData }) => {
+const Voltage = ({ getData, voltage, voltage_unbalanced,  dataLoad, websocket, changeLineChartData, settings }) => {
+  const selectedGateway = settings.navbarOptions.find(x => x.selected)
   useEffect(() => {
     getDataOnChangeOptions()
   }, [dataLoad.isLoad])
   
   useEffect(() => {
     getVoltage()
-    getUnbalanceedVoltage()
-  }, [])
+    getUnbalancedVoltage()
+  }, [selectedGateway])
   useEffect(() => { 
     const { topicCode, message, created_date, topic, gateway } = websocket.data
-    if(topicCode) {
-      const addedData = {
-        created_date,
-        value:parseFloat(message),
-        sensor:gateway,
-        topic,
-        topicCode
+    if(gateway === selectedGateway.code) {
+      if(topicCode) {
+        const addedData = {
+          created_date,
+          value:parseFloat(message),
+          sensor:gateway,
+          topic,
+          topicCode
+        }
+        changeLineChartData(addedData)
       }
-      changeLineChartData(addedData)
     }
   }, [websocket.data])
   const getVoltage = () => {
     voltage.options.filter(e => e.selected)
       .forEach(item => {
         getData({
-          sensor:'gateway_1',
+          sensor:selectedGateway.code,
           dataType:'voltage',
           subDataType:item.id,
           selectedOption:item
         })
       })
   }
-  const getUnbalanceedVoltage = () => {
+  const getUnbalancedVoltage = () => {
     voltage_unbalanced.options.filter(e => e.selected)
       .forEach(item => {
         getData({
-          sensor:'gateway_1',
+          sensor:selectedGateway.code,
           dataType:'voltage_unbalanced',
           subDataType:item.id,
           selectedOption:item
@@ -59,7 +62,7 @@ const Voltage = ({ getData, voltage, voltage_unbalanced,  dataLoad, websocket, c
         const dataType = isUnbalanced ? 'voltage_unbalanced': 'voltage'
         const subDataType = dataLoad.data.id
         getData({
-          sensor:'gateway_1',
+          sensor:selectedGateway.code,
           dataType,
           subDataType,
           selectedOption:dataLoad.data
@@ -79,7 +82,8 @@ const Voltage = ({ getData, voltage, voltage_unbalanced,  dataLoad, websocket, c
 }
 const mapStateToProps = s => ({
   ...s.voltageReducer,
-  websocket:s.websocketReducer 
+  websocket:s.websocketReducer,
+  settings:s.settingsReducer 
 })
 const mapDispatchToProps = {
   getData:voltageActions.getData,
@@ -92,5 +96,6 @@ Voltage.propTypes = {
   voltage_unbalanced:propTypes.object,
   dataLoad:propTypes.object,
   websocket:propTypes.object,
-  changeLineChartData:propTypes.func
+  changeLineChartData:propTypes.func,
+  settings:propTypes.object
 }

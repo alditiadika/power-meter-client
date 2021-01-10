@@ -7,7 +7,7 @@ import { SERVICE } from '../../config/config.json'
 const dashboardActions = {
   getDataVoltage: sensor => async dispatch => {
     try {
-      const { data } = await axios.get(`${SERVICE.POWER_METER_SERVICE}?sensor=${sensor ? sensor:'gateway_1'}&topic=Voltage_LN_Avg`)
+      const { data } = await axios.get(`${SERVICE.POWER_METER_SERVICE}?sensor=${sensor}&topic=Voltage_LN_Avg`)
       if(data.status === 200) {
         const rawData = data.message
         const timeSeries = rawData.map(item => ({ x:time.timeMinute.offset(new Date(item.created_date), 0), y:item.value }))
@@ -35,7 +35,7 @@ const dashboardActions = {
   },
   getDataCurrent: sensor => async dispatch => {
     try {
-      const { data } = await axios.get(`${SERVICE.POWER_METER_SERVICE}?sensor=${sensor ? sensor:'gateway_1'}&topic=Current_Avg`)
+      const { data } = await axios.get(`${SERVICE.POWER_METER_SERVICE}?sensor=${sensor}&topic=Current_Avg`)
       if(data.status === 200) {
         const rawData = data.message
         const timeSeries = rawData.map(item => ({ x:time.timeMinute.offset(new Date(item.created_date), 0), y:item.value }))
@@ -63,7 +63,7 @@ const dashboardActions = {
   },
   getDataPower: sensor => async dispatch => {
     try {
-      const { data } = await axios.get(`${SERVICE.POWER_METER_SERVICE}?sensor=${sensor ? sensor:'gateway_1'}&topic=Active_Power_Total`)
+      const { data } = await axios.get(`${SERVICE.POWER_METER_SERVICE}?sensor=${sensor}&topic=Active_Power_Total`)
       if(data.status === 200) {
         const rawData = data.message
         const timeSeries = rawData.map(item => ({ x:time.timeMinute.offset(new Date(item.created_date), 0), y:item.value }))
@@ -92,7 +92,7 @@ const dashboardActions = {
   },
   getDataEnergy: sensor => async dispatch => {
     try {
-      const { data } = await axios.get(`${SERVICE.POWER_METER_SERVICE}?sensor=${sensor ? sensor:'gateway_1'}&topic=ActiveEnergyDelivered`)
+      const { data } = await axios.get(`${SERVICE.POWER_METER_SERVICE}?sensor=${sensor}&topic=ActiveEnergyDelivered`)
       if(data.status === 200) {
         const rawData = data.message
         const timeSeries = rawData.map(item => ({ x:time.timeMinute.offset(new Date(item.created_date), 0), y:item.value }))
@@ -121,7 +121,7 @@ const dashboardActions = {
   },
   getDataGaugeChart: sensor => async dispatch => {
     try {
-      const { data } = await axios.get(`${SERVICE.POWER_METER_SERVICE}/gauge?sensor=${sensor ? sensor:'gateway_1'}`)
+      const { data } = await axios.get(`${SERVICE.POWER_METER_SERVICE}/gauge?sensor=${sensor}`)
       if(data.status === 200) {
         const payload = {
           isError:false,

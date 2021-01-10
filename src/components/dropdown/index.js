@@ -5,7 +5,6 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Select from '@material-ui/core/Select'
 
 const CustomDropdown = ({ data, onChange, value, label }) => {
-
   return (
     <div>
       <InputLabel style={{ color:'white' }} id='demo-simple-select-label'>{label}</InputLabel>
@@ -13,11 +12,11 @@ const CustomDropdown = ({ data, onChange, value, label }) => {
         style={{ width:300 }}
         labelId='demo-simple-select-label'
         id='demo-simple-select'
-        value={value.value}
+        value={value}
         onChange={onChange}
       >
         {data.map(item => (
-          <MenuItem key={Math.random()} value={item.value}>{item.name}</MenuItem>
+          <MenuItem key={Math.random()} value={item}>{item.name}</MenuItem>
         ))}
       </Select>
     </div>
