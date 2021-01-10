@@ -4,7 +4,7 @@
   "description": "Power Meter Dashboard client using React, Nivo, and Webpack",
   "main": "express-start.js",
   "scripts": {
-    "build": "npm run copy:config:dev && rm -rf dist && webpack --mode production",
+    "build": "rm -rf dist && webpack --mode production",
     "start": "node express-start.js",
     "dev": "npm run lint && webpack-dev-server --mode development --hot --progress --open --port 4005",
     "local:start": "npm run remove:config && npm run copy:config:local && npm run lint && webpack-dev-server --mode development --hot --progress --open --port 4004",
