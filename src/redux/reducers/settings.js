@@ -62,7 +62,7 @@ const settingsReducer = (state = { ...initialState }, action) => {
         navbarOptions
       }
     }
-    case settingsTypes.CHANGE_GATEWAY:{
+    case settingsTypes.CHANGE_GATEWAY: {
       const { value } = action.payload
       const navbarOptions = state.navbarOptions.map(item => {
         if(item.code === value.code) {

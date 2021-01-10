@@ -7,7 +7,6 @@ import Navbar from '../../components/navbar'
 
 import './style.css'
 import { settingsActions } from '../../redux/actions'
-import { Edit } from '@material-ui/icons'
 
 const SettingsDashboard = ({ 
   dataTable, 
