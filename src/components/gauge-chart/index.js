@@ -46,7 +46,7 @@ const GaugeChart = ({ min, max, value, text }) => {
           className='gauge-needle'
           d='M152 130 L150 0 L147 130 C147 140 153 140 153 130 Z'
           transform={`rotate(${-115 + (230*percentScale)}, 150, 130)`}
-          fill='#EEEEEE'
+          fill='#000'
         />
       </svg>
       <div className='gauge-text'>

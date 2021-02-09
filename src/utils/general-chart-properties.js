@@ -8,8 +8,8 @@ export const generalChartProperties = {
   motionDamping:50,
   theme:{
     axis: { ticks: { text: { fontSize: 14 } } },
-    grid: { line: { stroke: '#ddd', strokeDasharray: '1 2' } },
-    textColor:'#FFFFFF',
+    grid: { line: { stroke: '#B4AAAA', strokeDasharray: '1 2' } },
+    textColor:'#000',
   },
   colors:['#DD0079', '#7CDD00', '#7900DD', '#181845', '#ABABAB', '#DCE8D9', '#ECE51D', '#553353'],
   enableSlices:'x',
