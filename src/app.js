@@ -23,8 +23,8 @@ const RootRoute = ({ match }) => {
   )
 }
 class App extends Component {
-  UNSAFE_componentWillMount() {
-    this.props.initializeNavbar()
+  UNSAFE_componentWillMount = async () => {
+    await this.props.initializeNavbar()
     setTimeout(() => {
       const { navbarOptions } = this.props.settings
       const selectedGateway = navbarOptions.find(x => x.selected)

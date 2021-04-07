@@ -4,18 +4,13 @@ import { connect } from 'react-redux'
 import moment from 'moment'
 import { ResponsiveLine } from '@nivo/line'
 
-import { dashboardActions } from '../../../redux/actions'
 import { Card, CardBody, Cardheader } from '../../../components/card'
 import { useHistory } from 'react-router-dom'
 import { generalChartProperties } from '../../../utils/general-chart-properties'
 
-const TotalEnergyDelivered = ({ getData, data, settings }) => {
-  const selectedGateway = settings.navbarOptions.find(x => x.selected)
+const TotalEnergyDelivered = ({ data }) => {
   const history = useHistory()
   const [localData, setLocalData] = useState([])
-  useEffect(() => {
-    getData(selectedGateway.code)
-  }, [selectedGateway])
   useEffect(() => {
     setLocalData([{ id:'A', data:data.energy.timeSeries }])
   }, [data.energy.timeSeries])
@@ -71,13 +66,9 @@ const TotalEnergyDelivered = ({ getData, data, settings }) => {
   )
 }
 const mapStateToProps = s =>({
-  ...s.dashboardReducer,
-  settings:s.settingsReducer
+  ...s.dashboardReducer
 })
-const mapDispatchToProps = {
-  getData:dashboardActions.getDataEnergy
-}
-export default connect(mapStateToProps, mapDispatchToProps)(TotalEnergyDelivered)
+export default connect(mapStateToProps, {})(TotalEnergyDelivered)
 TotalEnergyDelivered.propTypes = {
   getData:propTypes.func,
   data:propTypes.object,

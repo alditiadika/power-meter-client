@@ -4,18 +4,13 @@ import { connect } from 'react-redux'
 import moment from 'moment'
 import { ResponsiveLine } from '@nivo/line'
 
-import { dashboardActions } from '../../../redux/actions'
 import { Card, CardBody, Cardheader } from '../../../components/card'
 import { useHistory } from 'react-router-dom'
 import { generalChartProperties } from '../../../utils/general-chart-properties'
 
-const CurrentAVG = ({ getData, data, settings }) => {
-  const selectedGateway = settings.navbarOptions.find(x => x.selected)
+const CurrentAVG = ({ data }) => {
   const history = useHistory()
   const [localData, setLocalData] = useState([])
-  useEffect(() => {
-    getData(selectedGateway.code)
-  }, [selectedGateway])
   useEffect(() => {
     setLocalData([{ id:'A', data:data.current.timeSeries }])
   }, [data.current.timeSeries])
@@ -71,13 +66,9 @@ const CurrentAVG = ({ getData, data, settings }) => {
   )
 }
 const mapStateToProps = s =>({
-  ...s.dashboardReducer,
-  settings:s.settingsReducer
+  ...s.dashboardReducer
 })
-const mapDispatchToProps = {
-  getData:dashboardActions.getDataCurrent
-}
-export default connect(mapStateToProps, mapDispatchToProps)(CurrentAVG)
+export default connect(mapStateToProps, {})(CurrentAVG)
 CurrentAVG.propTypes = {
   getData:propTypes.func,
   data:propTypes.object,

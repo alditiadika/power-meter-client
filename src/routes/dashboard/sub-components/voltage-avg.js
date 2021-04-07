@@ -5,17 +5,12 @@ import moment from 'moment'
 import { ResponsiveLine } from '@nivo/line'
 import { useHistory } from 'react-router-dom'
 
-import { dashboardActions } from '../../../redux/actions'
 import { Card, CardBody, Cardheader } from '../../../components/card'
 import { generalChartProperties } from '../../../utils/general-chart-properties'
 
-const VoltageAVG = ({ getData, data, settings }) => {
-  const selectedGateway = settings.navbarOptions.find(x => x.selected)
+const VoltageAVG = ({ data }) => {
   const [localData, setLocalData] = useState([])
   const history = useHistory()
-  useEffect(() => {
-    getData(selectedGateway.code)
-  }, [selectedGateway])
   useEffect(() => {
     setLocalData([{ id:'A', data:data.voltage.timeSeries }])
   }, [data.voltage.timeSeries])
@@ -71,13 +66,9 @@ const VoltageAVG = ({ getData, data, settings }) => {
   )
 }
 const mapStateToProps = s =>({
-  ...s.dashboardReducer,
-  settings:s.settingsReducer
+  ...s.dashboardReducer
 })
-const mapDispatchToProps = {
-  getData:dashboardActions.getDataVoltage
-}
-export default connect(mapStateToProps, mapDispatchToProps)(VoltageAVG)
+export default connect(mapStateToProps, {})(VoltageAVG)
 VoltageAVG.propTypes = {
   getData:propTypes.func,
   data:propTypes.object,

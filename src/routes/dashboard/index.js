@@ -13,10 +13,24 @@ import TotalPower from './sub-components/total-power'
 import ActiveEnergyDelivered from './sub-components/energy'
 
 
-const Dashboard = ({ getDataGaugeChart, websocket, changeGaugeData, changeLineChartData, settings }) => {
+const Dashboard = ({ 
+  getDataGaugeChart, 
+  websocket, 
+  changeGaugeData, 
+  changeLineChartData, 
+  settings,
+  getDataCurrent,
+  getDataEnergy,
+  getDataPower,
+  getDataVoltage 
+}) => {
   const selectedGateway = settings.navbarOptions.find(x => x.selected)
   useEffect(() => {
     getDataGaugeChart(selectedGateway.code)
+    getDataCurrent(selectedGateway.code)
+    getDataEnergy(selectedGateway.code)
+    getDataPower(selectedGateway.code)
+    getDataVoltage(selectedGateway.code)
   }, [selectedGateway])
   useEffect(() => {
     if(websocket.data.topicCode) {
@@ -81,7 +95,11 @@ const mapStateToProps = s => ({
 const mapDispatchToProps = {
   getDataGaugeChart:dashboardActions.getDataGaugeChart,
   changeGaugeData:dashboardActions.changeGaugeData,
-  changeLineChartData:dashboardActions.changeLineChartData
+  changeLineChartData:dashboardActions.changeLineChartData,
+  getDataCurrent:dashboardActions.getDataCurrent,
+  getDataEnergy:dashboardActions.getDataEnergy,
+  getDataPower:dashboardActions.getDataPower,
+  getDataVoltage:dashboardActions.getDataVoltage
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
 Dashboard.propTypes = {
@@ -89,5 +107,9 @@ Dashboard.propTypes = {
   changeGaugeData:propTypes.func,
   websocket:propTypes.object,
   changeLineChartData:propTypes.func,
-  settings:propTypes.object
+  settings:propTypes.object,
+  getDataCurrent:propTypes.func,
+  getDataEnergy:propTypes.func,
+  getDataPower:propTypes.func,
+  getDataVoltage:propTypes.func
 }

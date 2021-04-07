@@ -40,7 +40,6 @@ const settingsReducer = (state = { ...initialState }, action) => {
     case settingsTypes.INITIALIZE_SETTINGS: {
       const { dataTable, isEmpty, selectedGateway } = action.payload
       if(isEmpty) {
-        localStorage.setItem('settingsDatatable', JSON.stringify(state.dataTable))
         return state
       }
       const settingsSelectedGateway = dataTable.filter(e => e.gateway === selectedGateway.code)
@@ -54,7 +53,6 @@ const settingsReducer = (state = { ...initialState }, action) => {
     case settingsTypes.INITIALIZE_NAVBAR: {
       const { navbarOptions, isEmpty } = action.payload
       if(isEmpty) {
-        localStorage.setItem('navbarOptions', JSON.stringify(state.navbarOptions))
         return state
       }
       return {
@@ -79,7 +77,6 @@ const settingsReducer = (state = { ...initialState }, action) => {
       const selectedGateway = navbarOptions.find(x => x.selected)
       const settingsSelectedGateway = state.dataTable.filter(e => e.gateway === selectedGateway.code)
       const dataObj = generator(settingsSelectedGateway)
-      localStorage.setItem('navbarOptions', JSON.stringify(navbarOptions))
       return {
         ...state,
         navbarOptions,
@@ -142,7 +139,6 @@ const settingsReducer = (state = { ...initialState }, action) => {
       const selectedGateway = state.navbarOptions.find(x => x.selected)
       const settingsSelectedGateway = dataTable.filter(e => e.gateway === selectedGateway.code)
       const dataObj = generator(settingsSelectedGateway)
-      localStorage.setItem('settingsDatatable', JSON.stringify(dataTable))
       return {
         ...state,
         dataTable,
@@ -204,7 +200,6 @@ const settingsReducer = (state = { ...initialState }, action) => {
     }
     case settingsTypes.ON_GATEWAY_SAVE: {
       const navbarOptions = state.navbarOptions.map(item => ({ ...item, inEdit:false }))
-      localStorage.setItem('navbarOptions', JSON.stringify(navbarOptions))
       return {
         ...state,
         navbarOptions,

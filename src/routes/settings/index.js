@@ -42,7 +42,7 @@ const SettingsDashboard = ({
             inEdit={selectedGateway.inEdit}
             onEdit={() => onClickEditGateway(selectedGateway)}
             onDiscard={() => onDiscardGateway(selectedGateway)}
-            onSave={onSaveDataitemGateway}
+            onSave={() => onSaveDataitemGateway(selectedGateway)}
           />
         </div>
       </div>
@@ -62,7 +62,7 @@ const SettingsDashboard = ({
                     inEdit={item.inEdit}
                     onEdit={() => onClickEdit(item)}
                     onDiscard={() => onDiscard(item)}
-                    onSave={onSaveDataItem}
+                    onSave={() => onSaveDataItem(item)}
                   />
                 </td>
                 <td>{item.title}</td>

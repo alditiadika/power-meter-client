@@ -14,8 +14,7 @@
     "simulate:prod": "rm -rf dist && webpack --mode production && node express-start.js",
     "remove:config": "rm -rf config/config.json",
     "copy:config:dev": "cp -f src/config/config-dev.json src/config/config.json",
-    "copy:config:dev-site": "cp -f src/config/config-dev-site.json src/config/config.json",
-    "copy:config:uat": "cp -f src/config/config-uat.json src/config/config.json",
+    "copy:config:prod": "cp -f src/config/config-prod.json src/config/config.json",
     "copy:config:local": "cp -f src/config/config-local.json src/config/config.json",
     "clean": "rm -rf node-modules && rm -rf package-lock.json && npm install --no-optional"
   },
@@ -78,8 +77,6 @@
     "react": "^16.13.0",
     "react-datepicker": "^3.0.0",
     "react-dom": "^16.13.0",
-    "react-gauge-chart": "^0.3.0",
-    "react-lazy-load": "^3.0.13",
     "react-loadable": "^5.5.0",
     "react-perfect-scrollbar": "^1.5.8",
     "react-redux": "^7.2.0",
@@ -97,12 +94,5 @@
     "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^3.10.3",
     "workbox-webpack-plugin": "^5.1.2"
-  },
-  "peerDependencies": {
-    "react-spring": "^8.0.27",
-    "@react-spring/konva": "^9.0.0-rc.3",
-    "@react-spring/native": "^9.0.0-rc.3",
-    "@react-spring/three": "^9.0.0-rc.3",
-    "@react-spring/zdog": "^9.0.0-rc.3"
   }
 }
